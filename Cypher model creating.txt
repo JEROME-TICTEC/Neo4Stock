@@ -1,0 +1,33 @@
+/* nodes  "Model"
+CREATE (mNSL1:Model:MATERIAL:NSL1 {myID: '1', name:'mNSL1', Ref_Interal: 'aa', SN: '00'})
+CREATE (mNSL2:Model:GUIP:NSL2 {myID: '2', name:'mNSL2', CodeGUIP: 'E25A2'})
+CREATE (mNSL3:Model:BOM:NSL3 {myID: '3', name:'mNSL3', Lib: 'bom1', UseCase: 'test'})
+CREATE (mNSL4:Model:INSTANCE:NSL4 {myID: '4', name:'mNSL4', Identifier: '0',Ref_Interal: 'aa', Ratio_Qty: '1/1'})
+CREATE (mNSL5:Model:STATE:NSL5 {myID: '5', name:'mNSL5', Description: 'Defect supply power'})
+CREATE (mNSL6:Model:LOCALISATION:NSL6 {myID: '6', name:'mNSL6', Lieu: 'Paris', Ratio_Qty: '1/1', Contact: 'moi'})
+CREATE (mNSL7:Model:USING:NSL7 {myID: '7', name:'mNSL7', USages: 'aa', Ratio_Qty: '1/1'})
+CREATE (mNSL8:Model:MANUFACTURER:NSL8 {myID: '8', name:'mNSL8', PN: 'aa'})
+
+
+/* exemple for recursives relations
+CREATE (NSL3_m1)-[NSR1:mNSR1]->(mNSL3_m2)
+CREATE (NSL3_m1)-[NSR1:E2]->(mNSL3_m2)
+CREATE (NSL2_m1)-[NSR2:mNSR2]->(mNSL2_m2)
+CREATE (NSL2_m1)-[NSR2:E2]->(mNSL2_m2)
+CREATE (NSL6_m1)-[NSR9:mNSR9]->(mNSL6_m2)
+CREATE (NSL6_m1)-[NSR9:Co2]->(mNSL6_m2)
+
+
+/* relations
+MATCH (n:BOM),(m:MATERIAL) MERGE (n)-[NSR3:mNSR3]->(m)
+MATCH (n:BOM),(m:MATERIAL) MERGE (n)-[NSR3:E2]->(m)
+MATCH (n:INSTANCE),(m:STATE) MERGE (n)-[NSR4:mNSR4]->(m)
+MATCH (n:INSTANCE),(m:STATE) MERGE (n)-[NSR4:P2]->(m)
+MATCH (n:INSTANCE),(m:USING) MERGE (n)-[NSR5:mNSR5]->(m)
+MATCH (n:INSTANCE),(m:USING) MERGE (n)-[NSR5:Da]->(m)
+MATCH (n:INSTANCE),(m:LOCALISATION) MERGE (n)-[NSR6:mNSR6]->(m)
+MATCH (n:INSTANCE),(m:LOCALISATION) MERGE (n)-[NSR6:Str]->(m)
+MATCH (n:MATERIAL),(m:GUIP) MERGE (n)-[NSR7:mNSR7]->(m)
+MATCH (n:MATERIAL),(m:GUIP) MERGE (n)-[NSR7:E2]->(m)
+MATCH (n:MATERIAL),(m:MANUFACTURER) MERGE (n)-[NSR8:mNSR8]->(m)
+MATCH (n:MATERIAL),(m:MANUFACTURER) MERGE (n)-[NSR8:made]->(m)
